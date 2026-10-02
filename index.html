@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ustaz — уроки с безопасной оплатой</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#161a22;--mute:#6b7280;--line:#e5e7eb;--acc:#3a4bd6;--accs:#eceefc;--ok:#0f8a5f;--star:#f5a524;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#171b23;--ink:#eef0f4;--mute:#9aa3b2;--line:#262c38;--acc:#8b98ff;--accs:#20264a;--ok:#3ecf99}}
+:root[data-theme="dark"]{--bg:#0e1116;--card:#171b23;--ink:#eef0f4;--mute:#9aa3b2;--line:#262c38;--acc:#8b98ff;--accs:#20264a;--ok:#3ecf99}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,select,input{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.w{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:16px;height:60px}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.02em;margin-right:auto}
+.logo i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--acc);margin-left:4px}
+nav{display:flex;gap:4px;overflow-x:auto}
+nav button,.lg button{border:0;background:none;padding:8px 12px;border-radius:999px;color:var(--mute);font-weight:500;white-space:nowrap;transition:.2s}
+nav button:hover,.lg button:hover{color:var(--ink)}
+nav button.on,.lg button.on{background:var(--accs);color:var(--acc);font-weight:700}
+.lg{display:flex}
+@media(max-width:760px){.bar{flex-wrap:wrap;height:auto;padding:10px 0;gap:6px}nav{order:3;width:100%}}
+h1{font-size:clamp(30px,5vw,50px);line-height:1.1;letter-spacing:-.03em;margin:56px 0 14px;max-width:16em;font-weight:800}
+.sub{color:var(--mute);max-width:36em;margin:0 0 32px;font-size:18px}
+h2{font-size:22px;letter-spacing:-.02em;margin:0 0 16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--card);padding:8px 16px;border-radius:999px;font-weight:500;transition:.2s}
+.chip:hover{border-color:var(--acc)}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:24px;align-items:end;margin-bottom:28px}
+.filters label{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--mute);font-weight:500}
+select,textarea,input[type=text],input[type=tel],input[type=email],input[type=number]{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:170px}
+input[type=range]{accent-color:var(--acc);width:220px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding-bottom:64px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;text-align:left;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--acc)}
+.card h3{margin:0;font-size:18px;letter-spacing:-.01em;line-height:1.3}
+.row{display:flex;align-items:center;gap:10px}.sp{justify-content:space-between}
+.av{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff}
+.av.big{width:72px;height:72px;font-size:24px}
+.mute{color:var(--mute);font-size:14px}.st{color:var(--star);letter-spacing:1px}
+.tag{font-size:13px;padding:3px 10px;border-radius:999px;background:var(--accs);color:var(--acc);font-weight:500}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.price{font-weight:800;font-size:20px}
+.btn{border:0;background:var(--acc);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;transition:.2s}
+.btn:hover{filter:brightness(1.1)}.btn.g{background:var(--accs);color:var(--acc)}.btn.bad{background:none;border:1px solid var(--line);color:var(--ink)}
+.empty{grid-column:1/-1;padding:48px 0;color:var(--mute);text-align:center}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding-bottom:32px}
+.safe{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:64px;color:var(--mute)}
+#m{position:fixed;inset:0;z-index:20;background:rgba(10,12,18,.55);display:none;align-items:center;justify-content:center;padding:16px}
+#m.on{display:flex}
+.md{background:var(--card);border-radius:20px;max-width:560px;width:100%;max-height:92%;overflow:auto;padding:26px;position:relative;animation:pop .22s ease}
+@keyframes pop{from{opacity:0;transform:scale(.96)}}
+.x{position:absolute;right:14px;top:12px;border:0;background:none;font-size:26px;color:var(--mute)}
+.vid{aspect-ratio:16/9;border-radius:14px;background:linear-gradient(135deg,var(--accs),var(--line));display:grid;place-items:center;position:relative;margin:14px 0}
+.vid b{width:56px;height:56px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:20px;padding-left:4px}
+.vid span{position:absolute;right:10px;bottom:8px;font-size:12px;background:rgba(0,0,0,.6);color:#fff;padding:2px 8px;border-radius:6px}
+.f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;font-size:14px;color:var(--mute);font-weight:500}
+.f input,.f textarea,.f select{width:100%}textarea{resize:vertical;min-height:84px}.chip input{margin-right:6px;accent-color:var(--acc)}.f.bad input{border-color:#e5484d}
+.rs{display:flex;gap:4px;font-size:38px}.rs button{border:0;background:none;color:var(--line);padding:0;transition:.15s}.rs button.on{color:var(--star)}
+.ok{color:var(--ok);font-weight:700}
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--mute);text-align:center;font-size:14px}
+footer b{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="w bar">
+<div class="logo">Ustaz<i></i></div>
+<nav id="nav"></nav>
+<div class="lg" id="lg"></div>
+</div></header>
+<main class="w" id="app"></main>
+<footer><div class="w"><div id="dev"></div><div style="margin-top:6px"><b>Сыдық Нұрғиса</b> · <b>Калыбай Ержан</b> · <b>Уалихан Қожа</b></div></div></footer>
+<div id="m" role="dialog" aria-modal="true"><div class="md" id="md"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.98.0/lib/index.iife.min.js"></script>
+<script>
+const L={
+ru:{nw:'не найден. Установите кошелёк:',nph:'Phantom не найден. Установите расширение:',wdis:'Отключить',tokw:'токенов',trate:'1 токен = 100 ₸',tknone:'Токен не настроен: укажите адрес токена во вкладке Devnet.',tka:'Адрес токена (mint) в Devnet',tks:'Сохранить токен',tkbad:'Токен не найден в Devnet. Проверьте адрес.',lowt:'Недостаточно токенов на кошельке.',dp:'Дать платформе 1 SOL (комиссии выплат)',c6:'Токен настроен',c7:'Баланс вашего токена',nd:'Devnet',dt:'Проверка Devnet',dd:'Здесь видно, работает ли реальная оплата: библиотека Solana, Phantom, связь с Devnet и балансы.',c1:'Библиотека Solana загружена',c2:'Кошелёк Phantom или Solflare найден',c3:'Связь с Solana Devnet',c4:'Баланс кошелька платформы',c5:'Ваш кошелёк подключён',dlive:'Реальный режим Devnet: оплата настоящая (тестовые SOL)',ddemo:'Демо-режим: какой-то пункт не выполнен. Внутри страницы Claude сеть Solana закрыта, откройте сайт на Netlify.',dr:'Проверить',da:'Получить 1 тестовый SOL',dx:'Тест: отправить 0.001 SOL',dok:'Перевод выполнен',daf:'Не удалось получить SOL. Лимит faucet: попробуйте позже на faucet.solana.com.',wpf:'Выплата не выполнена. Попробуйте ещё раз.',wpay:'Выплата учителю',wdm:'демо',wbad:'Неверный адрес кошелька',wlt:'Кошелёк Solana Devnet (для выплат)',wlow:'Недостаточно тестовых SOL. Возьмите их на faucet.solana.com.',wnet:'Перевод не выполнен. Проверьте, что Phantom работает в сети Solana Devnet.',wnote2:'Devnet: тестовые SOL, настоящих денег нет.',wbal:'Баланс Devnet',wfc:'Получить тестовые SOL',wex:'Открыть в Explorer',wesc:'Кошелёк платформы (эскроу)',cardm:'Банковская карта',wc:'Подключить кошелёк',wn:'Кошелёк не подключён',wdemo:'демо-кошелёк',wrej:'Подключение или подпись отклонены',wneed:'Сначала подключите кошелёк',wrate:'Демо-курс: 1 SOL = 80 000 ₸',wnote:'Тестовая транзакция: реальные деньги не списываются.',tx:'Транзакция',pub:'Опубликовать курс',pubd:'Курс опубликован',see:'Смотреть в каталоге',del:'Удалить',cd:'Описание курса',ey:'Опыт, лет',ed:'Образование',svr:'Сохранить резюме',pv:'Посмотреть резюме',cl:'Закрыть',lr:'Вход / Регистрация',li:'Войти',rg:'Регистрация',lo:'Выйти',ct:'Email или номер телефона',nk:'Никнейм',rl:'Кто вы?',st:'Ученик',tc:'Учитель',myp:'Мой профиль',hi:'Привет',ce:'Введите корректный email или номер телефона',ne:'Никнейм: минимум 3 символа',dm:'Демо: подойдёт любой email или номер. В настоящей версии добавим пароль и код из SMS.',ab:'О себе',skl:'Навыки (через запятую)',sv:'Сохранить',ac:'Добавить курс',ctt:'Название курса',cp:'Цена, ₸ (500–10000)',cg:'Категория',sd:'Сохранено',nl:'Сначала войдите или зарегистрируйтесь',mc:'Мои курсы',nc:'Курсы',nt:'Учителя',nh:'Как это работает',nm:'Мои уроки',h1:'Учитесь у живого учителя. Платите, когда урок помог.',sub:'Деньги хранятся на эскроу и уходят учителю только после вашего подтверждения.',wl:'Что хотите изучить?',all:'Все',python:'Python',backend:'Backend',cpp:'C++',vibe:'Вайб-кодинг',lang:'Языки',tl:'Язык обучения',mp:'Ваша цена до',none:'Ничего не найдено. Увеличьте цену или смените язык.',min:'мин',buy:'Купить урок',prof:'Профиль и резюме',vid:'Видео-визитка · 2 мин',plan:'Формат уроков',planv:'Видеозвонок, 60 мин: цель → практика → домашнее задание.',exp:'Опыт',yrs:'лет',edu:'Образование',sk:'Навыки',ver:'Личность проверена',rev:'отзывов',courses:'Курсы учителя',pay:'Оплата урока',fio:'ФИО',ph:'Телефон',card:'Номер карты (демо, не сохраняется)',pb:'Оплатить',sn:'Деньги заморожены на эскроу. Учитель получит их только после вашего подтверждения урока.',err:'Проверьте выделенные поля',mine0:'Пока нет уроков. Выберите курс.',s1:'На эскроу',s2:'Выплачено учителю',s3:'Возврат запрошен',conf:'Урок состоялся и был полезен?',yes:'Да',no:'Нет',rate:'Оцените урок',thx:'Спасибо! Рейтинг учителя обновлён.',fee:'Учителю 95%, платформа 5%',paid:'Оплачено. Деньги на эскроу.',rf:'Мы вернём деньги и разберём ситуацию.',dev:'Разработчики',hd:['Выберите курс','Оплата на эскроу','Проведите урок','Подтвердите и оцените'],hp:['Смотрите видео учителя и резюме.','Мы храним деньги, учитель их не видит.','Занятие по видеосвязи.','Учитель получает 95%. Отзыв открывается только после урока.'],sf:'Безопасность: деньги на эскроу, проверенные учителя, отзывы только после урока.'},
+kk:{nw:'табылмады. Әмиянды орнатыңыз:',nph:'Phantom табылмады. Кеңейтімді орнатыңыз:',wdis:'Ажырату',tokw:'токен',trate:'1 токен = 100 ₸',tknone:'Токен бапталмаған: токен мекенжайын Devnet бетінде көрсетіңіз.',tka:'Токен мекенжайы (mint), Devnet',tks:'Токенді сақтау',tkbad:'Devnet-те токен табылмады. Мекенжайды тексеріңіз.',lowt:'Әмиянда токен жеткіліксіз.',dp:'Платформаға 1 SOL беру (төлем комиссиясы)',c6:'Токен бапталған',c7:'Токен балансыңыз',nd:'Devnet',dt:'Devnet тексеру',dd:'Нақты төлем жұмыс істей ме: Solana кітапханасы, Phantom, Devnet байланысы және баланстар осында көрінеді.',c1:'Solana кітапханасы жүктелді',c2:'Phantom немесе Solflare әмияны табылды',c3:'Solana Devnet байланысы',c4:'Платформа әмияны балансы',c5:'Сіздің әмияныңыз қосылған',dlive:'Devnet нақты режимі: төлем шынайы (тест SOL)',ddemo:'Демо-режим: тізімдегі бір тармақ орындалмады. Claude беті ішінде Solana желісі жабық, сайтты Netlify-да ашыңыз.',dr:'Тексеру',da:'1 тест SOL алу',dx:'Тест: 0.001 SOL жіберу',dok:'Аударым орындалды',daf:'SOL алу мүмкін болмады. Faucet лимиті: faucet.solana.com-да кейінірек көріңіз.',wpf:'Төлем орындалмады. Қайталап көріңіз.',wpay:'Ұстазға төлем',wdm:'демо',wbad:'Әмиян мекенжайы қате',wlt:'Solana Devnet әмияны (төлемдер үшін)',wlow:'Тест SOL жеткіліксіз. Оларды faucet.solana.com сайтынан алыңыз.',wnet:'Аударым орындалмады. Phantom Solana Devnet желісінде екенін тексеріңіз.',wnote2:'Devnet: тест SOL, нақты ақша жоқ.',wbal:'Devnet баланс',wfc:'Тест SOL алу',wex:'Explorer-де ашу',wesc:'Платформа әмияны (эскроу)',cardm:'Банк картасы',wc:'Әмиянды қосу',wn:'Әмиян қосылмаған',wdemo:'демо-әмиян',wrej:'Қосылу немесе қол қою қабылданбады',wneed:'Алдымен әмиянды қосыңыз',wrate:'Демо-бағам: 1 SOL = 80 000 ₸',wnote:'Сынақ транзакциясы: нақты ақша есептен шығарылмайды.',tx:'Транзакция',pub:'Курсты жариялау',pubd:'Курс жарияланды',see:'Каталогта көру',del:'Жою',cd:'Курс сипаттамасы',ey:'Тәжірибе, жыл',ed:'Білімі',svr:'Түйіндемені сақтау',pv:'Түйіндемені көру',cl:'Жабу',lr:'Кіру / Тіркелу',li:'Кіру',rg:'Тіркелу',lo:'Шығу',ct:'Email немесе телефон нөмірі',nk:'Лақап ат',rl:'Сіз кімсіз?',st:'Оқушы',tc:'Оқытушы',myp:'Менің профилім',hi:'Сәлем',ce:'Дұрыс email немесе телефон нөмірін енгізіңіз',ne:'Лақап ат: кемінде 3 таңба',dm:'Демо: кез келген email немесе нөмір жарайды. Нақты нұсқада құпиясөз және SMS-код қосамыз.',ab:'Өзім туралы',skl:'Дағдылар (үтір арқылы)',sv:'Сақтау',ac:'Курс қосу',ctt:'Курс атауы',cp:'Бағасы, ₸ (500–10000)',cg:'Санат',sd:'Сақталды',nl:'Алдымен кіріңіз немесе тіркеліңіз',mc:'Менің курстарым',nc:'Курстар',nt:'Оқытушылар',nh:'Қалай жұмыс істейді',nm:'Менің сабақтарым',h1:'Нағыз ұстазбен оқыңыз. Сабақ көмектескенде ғана төлеңіз.',sub:'Ақша эскроуда сақталады және сіз растағаннан кейін ғана ұстазға жіберіледі.',wl:'Не үйренгіңіз келеді?',all:'Барлығы',python:'Python',backend:'Backend',cpp:'C++',vibe:'Вайб-кодинг',lang:'Тілдер',tl:'Оқыту тілі',mp:'Бағаңыз (дейін)',none:'Ештеңе табылмады. Бағаны арттырыңыз немесе тілді ауыстырыңыз.',min:'мин',buy:'Сабақты сатып алу',prof:'Профиль және түйіндеме',vid:'Бейне таныстыру · 2 мин',plan:'Сабақ форматы',planv:'Бейнеқоңырау, 60 мин: мақсат → практика → үй тапсырмасы.',exp:'Тәжірибе',yrs:'жыл',edu:'Білімі',sk:'Дағдылар',ver:'Жеке басы тексерілген',rev:'пікір',courses:'Ұстаз курстары',pay:'Сабаққа төлем',fio:'Аты-жөні',ph:'Телефон',card:'Карта нөмірі (демо, сақталмайды)',pb:'Төлеу',sn:'Ақша эскроуда қатырылады. Ұстаз оны сіз сабақты растағаннан кейін ғана алады.',err:'Белгіленген өрістерді тексеріңіз',mine0:'Әзірге сабақ жоқ. Курс таңдаңыз.',s1:'Эскроуда',s2:'Ұстазға төленді',s3:'Қайтару сұралды',conf:'Сабақ өтті ме және пайдалы болды ма?',yes:'Иә',no:'Жоқ',rate:'Сабақты бағалаңыз',thx:'Рахмет! Ұстаздың рейтингі жаңарды.',fee:'Ұстазға 95%, платформаға 5%',paid:'Төленді. Ақша эскроуда.',rf:'Ақшаны қайтарамыз және жағдайды қараймыз.',dev:'Әзірлеушілер',hd:['Курс таңдаңыз','Эскроуға төлеңіз','Сабақ өткізіңіз','Растап, бағалаңыз'],hp:['Ұстаздың бейнесі мен түйіндемесін қараңыз.','Ақшаны біз сақтаймыз, ұстаз көрмейді.','Бейнебайланыс арқылы сабақ.','Ұстаз 95% алады. Пікір тек сабақтан кейін ашылады.'],sf:'Қауіпсіздік: ақша эскроуда, тексерілген ұстаздар, пікір тек сабақтан кейін.'},
+en:{nw:'not found. Install the wallet:',nph:'Phantom not found. Install the extension:',wdis:'Disconnect',tokw:'tokens',trate:'1 token = 100 ₸',tknone:'Token not set: enter the token address on the Devnet tab.',tka:'Token address (mint) on Devnet',tks:'Save token',tkbad:'Token not found on Devnet. Check the address.',lowt:'Not enough tokens in your wallet.',dp:'Give platform 1 SOL (payout fees)',c6:'Token configured',c7:'Your token balance',nd:'Devnet',dt:'Devnet check',dd:'See whether real payments work: Solana library, Phantom, Devnet connection and balances.',c1:'Solana library loaded',c2:'Phantom or Solflare wallet found',c3:'Solana Devnet connection',c4:'Platform wallet balance',c5:'Your wallet connected',dlive:'Devnet live mode: payments are real (test SOL)',ddemo:'Demo mode: a check above failed. Inside the Claude page the Solana network is blocked, so open the site on Netlify.',dr:'Run check',da:'Get 1 test SOL',dx:'Test: send 0.001 SOL',dok:'Transfer done',daf:'Could not get SOL. Faucet limit: try again later at faucet.solana.com.',wpf:'Payout failed. Please try again.',wpay:'Teacher payout',wdm:'demo',wbad:'Invalid wallet address',wlt:'Solana Devnet wallet (for payouts)',wlow:'Not enough test SOL. Get some at faucet.solana.com.',wnet:'Transfer failed. Make sure Phantom is on Solana Devnet.',wnote2:'Devnet: test SOL, no real money.',wbal:'Devnet balance',wfc:'Get test SOL',wex:'Open in Explorer',wesc:'Platform wallet (escrow)',cardm:'Bank card',wc:'Connect wallet',wn:'Wallet not connected',wdemo:'demo wallet',wrej:'Connection or signature rejected',wneed:'Connect your wallet first',wrate:'Demo rate: 1 SOL = 80,000 ₸',wnote:'Test transaction: no real money is charged.',tx:'Transaction',pub:'Publish course',pubd:'Course published',see:'View in catalog',del:'Delete',cd:'Course description',ey:'Experience, years',ed:'Education',svr:'Save resume',pv:'Preview resume',cl:'Close',lr:'Log in / Sign up',li:'Log in',rg:'Sign up',lo:'Log out',ct:'Email or phone number',nk:'Nickname',rl:'Who are you?',st:'Student',tc:'Teacher',myp:'My profile',hi:'Hello',ce:'Enter a valid email or phone number',ne:'Nickname: at least 3 characters',dm:'Demo: any email or number works. The real version will add a password and SMS code.',ab:'About me',skl:'Skills (comma separated)',sv:'Save',ac:'Add course',ctt:'Course title',cp:'Price, ₸ (500–10000)',cg:'Category',sd:'Saved',nl:'Please log in or sign up first',mc:'My courses',nc:'Courses',nt:'Teachers',nh:'How it works',nm:'My lessons',h1:'Learn from a real teacher. Pay when the lesson helps.',sub:'Your money is held in escrow and released to the teacher only after you confirm.',wl:'What do you want to learn?',all:'All',python:'Python',backend:'Backend',cpp:'C++',vibe:'Vibe coding',lang:'Languages',tl:'Teaching language',mp:'Your price up to',none:'Nothing found. Raise the price or change the language.',min:'min',buy:'Buy lesson',prof:'Profile and resume',vid:'Video intro · 2 min',plan:'Lesson format',planv:'Video call, 60 min: goal → practice → homework.',exp:'Experience',yrs:'years',edu:'Education',sk:'Skills',ver:'Identity verified',rev:'reviews',courses:'Teacher courses',pay:'Lesson payment',fio:'Full name',ph:'Phone',card:'Card number (demo, not saved)',pb:'Pay',sn:'Your money is frozen in escrow. The teacher gets it only after you confirm the lesson.',err:'Check the highlighted fields',mine0:'No lessons yet. Pick a course.',s1:'Held in escrow',s2:'Paid to teacher',s3:'Refund requested',conf:'Did the lesson take place and was it useful?',yes:'Yes',no:'No',rate:'Rate the lesson',thx:'Thank you! Teacher rating updated.',fee:'Teacher gets 95%, platform 5%',paid:'Paid. Money is in escrow.',rf:'We will refund you and review the case.',dev:'Developers',hd:['Choose a course','Pay into escrow','Take the lesson','Confirm and rate'],hp:['Watch the teacher video and resume.','We hold the money; the teacher cannot touch it.','A live video session.','Teacher receives 95%. Reviews open only after the lesson.'],sf:'Safety: escrow payments, verified teachers, reviews only after the lesson.'}};
+const CATS=['all','python','backend','cpp','vibe','lang'];
+const T=[
+{id:1,n:'Айгерім Сәрсенова',r:4.9,n0:38,y:7,e:'КБТУ, Computer Science',s:['Python','Django','Алгоритмы'],l:['ru','kk'],b:['Пишу на Python 7 лет, работала в финтехе. Объясняю просто и на задачах.','Python-да 7 жыл жұмыс істедім, финтехте болдым. Қарапайым әрі тапсырмалар арқылы түсіндіремін.','7 years of Python, ex-fintech. I teach simply and through real tasks.']},
+{id:2,n:'Дмитрий Волков',r:4.8,n0:52,y:9,e:'НГУ, Прикладная математика',s:['Backend','PostgreSQL','Docker'],l:['ru','en'],b:['Строю серверные системы. Научу проектировать API и базы данных.','Сервер жүйелерін құрамын. API мен дерекқор жобалауды үйретемін.','I build server systems. I will teach you API and database design.']},
+{id:3,n:'Daniel Carter',r:4.7,n0:29,y:11,e:'TU Munich, Software Engineering',s:['C++','STL','Performance'],l:['en','ru'],b:['Игровой и embedded-разработчик. Разберём C++ от указателей до шаблонов.','Ойын және embedded әзірлеушісі. C++-ты көрсеткіштерден шаблондарға дейін талдаймыз.','Game and embedded developer. We go from pointers to templates.']},
+{id:4,n:'Ержан Төлеуов',r:4.9,n0:44,y:5,e:'Astana IT University',s:['Vibe coding','C++','Cursor'],l:['kk','ru'],b:['Показываю, как с ИИ собрать рабочий продукт за вечер. Также учу C++ на казахском.','Жасанды интеллектпен бір кешке өнім жинауды көрсетемін. C++-ты қазақша да үйретемін.','I show how to ship a working product in an evening with AI. Also C++ in Kazakh.']},
+{id:5,n:'Sarah Whitmore',r:5.0,n0:61,y:8,e:'University of Leeds, Linguistics',s:['English','IELTS','Vibe coding'],l:['en'],b:['Преподаватель английского и вайб-кодинга: практика, а не грамматика ради грамматики.','Ағылшын және вайб-кодинг оқытушысы: практика, тек грамматика емес.','English and vibe coding teacher: practice first, not grammar for its own sake.']},
+{id:6,n:'Әлия Нұрланқызы',r:4.9,n0:73,y:12,e:'ЕНУ, Филология',s:['Қазақ тілі','Русский язык','Speaking'],l:['kk','ru'],b:['Учу казахскому и русскому: от разговорной речи до подготовки к экзаменам.','Қазақ және орыс тілін үйретемін: сөйлеу тәжірибесінен емтиханға дейін.','I teach Kazakh and Russian, from conversation to exam prep.']},
+{id:7,n:'Марат Исаев',r:4.6,n0:21,y:6,e:'SDU, Information Systems',s:['Python','Node.js','Data'],l:['kk','en'],b:['Разработчик в стартапах. Python для данных и Node.js бэкенд на казахском и английском.','Стартаптарда әзірлеуші. Деректерге арналған Python және Node.js бэкенд.','Startup developer. Python for data and Node.js backend in Kazakh and English.']}];
+const C=[
+{id:1,c:'python',t:1,p:4500,l:['ru','kk'],n:['Python с нуля до первого проекта','Python: нөлден алғашқы жобаға дейін','Python from zero to your first project']},
+{id:2,c:'python',t:7,p:6000,l:['en'],n:['Python для анализа данных','Деректер талдауына арналған Python','Python for data analysis']},
+{id:3,c:'backend',t:2,p:7500,l:['ru','en'],n:['Backend: REST API и базы данных','Backend: REST API және дерекқор','Backend: REST APIs and databases']},
+{id:4,c:'backend',t:7,p:5500,l:['kk','en'],n:['Node.js бэкенд с нуля','Node.js бэкендті нөлден','Node.js backend from scratch']},
+{id:5,c:'cpp',t:3,p:8000,l:['en','ru'],n:['C++: указатели, память, шаблоны','C++: көрсеткіштер, жад, шаблондар','C++: pointers, memory, templates']},
+{id:6,c:'cpp',t:4,p:5000,l:['kk'],n:['C++ қазақ тілінде: бастапқы курс','C++ қазақ тілінде: бастапқы курс','C++ in Kazakh: starter course']},
+{id:7,c:'vibe',t:4,p:4000,l:['kk','ru'],n:['Вайб-кодинг: приложение за вечер','Вайб-кодинг: бір кешке қосымша','Vibe coding: an app in one evening']},
+{id:8,c:'vibe',t:5,p:6500,l:['en'],n:['Vibe coding with AI tools','Жасанды интеллектпен вайб-кодинг','Vibe coding with AI tools']},
+{id:9,c:'lang',t:5,p:3500,l:['en','ru'],n:['Разговорный английский','Ағылшын сөйлеу практикасы','Conversational English']},
+{id:10,c:'lang',t:6,p:3000,l:['kk','ru'],n:['Казахский и русский: разговорная практика','Қазақ және орыс тілі: сөйлеу практикасы','Kazakh and Russian conversation']}];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let lang=ld('lg','ru'),view='c',cat='all',tl=lang,price=10000,O=ld('o',[]),R=ld('r',{});
+const t=k=>L[lang][k]||k, IDX={ru:0,kk:1,en:2}, LN={ru:'Русский',kk:'Қазақша',en:'English'};
+const tch=id=>T.find(x=>x.id===id), crs=id=>C.find(x=>x.id===id);
+const rt=x=>{const a=R[x.id]||[0,0],n=x.n0+a[1];return n?(x.r*x.n0+a[0])/n:0};
+const cnt=x=>x.n0+(R[x.id]?R[x.id][1]:0);
+const stars=v=>'<span class="st">'+'★'.repeat(Math.round(v))+'☆'.repeat(5-Math.round(v))+'</span>';
+const ini=x=>x.n.split(' ').map(w=>w[0]).slice(0,2).join('');
+const av=(x,b)=>`<div class="av ${b?'big':''}" style="background:hsl(${x.id*47+200} 45% 45%)">${ini(x)}</div>`;
+const money=v=>v.toLocaleString('ru-RU')+' ₸';
+const tags=a=>'<div class="tags">'+a.map(x=>`<span class="tag">${esc(LN[x]||x)}</span>`).join('')+'</div>';
+
+function head(){
+ $('#nav').innerHTML=[['c','nc'],['t','nt'],['h','nh'],['m','nm'],['d','nd']].map(([v,k])=>`<button class="${view===v?'on':''}" onclick="go('${v}')">${t(k)}${v==='m'&&O.length?' ('+O.length+')':''}</button>`).join('')+(U?`<button class="${view==='p'?'on':''}" onclick="go('p')">👤 ${esc(U.nk)}</button>`:`<button class="${view==='a'?'on':''}" onclick="go('a')">${t('lr')}</button>`);
+ $('#lg').innerHTML=[['ru','РУС'],['kk','ҚАЗ'],['en','ENG']].map(([k,n])=>`<button class="${lang===k?'on':''}" onclick="setL('${k}')">${n}</button>`).join('');
+ $('#dev').textContent=t('dev');document.documentElement.lang=lang;
+}
+function go(v){view=v;render();scrollTo({top:0})}
+function setL(k){lang=k;tl=k;sv('lg',k);render();if($('#m').classList.contains('on'))closeM()}
+function render(){head();({c:vC,t:vT,h:vH,m:vM,a:vA,p:vP,d:vD})[view]()}
+
+function vC(){
+ const list=C.filter(c=>(cat==='all'||c.c===cat)&&(tl==='all'||c.l.includes(tl))&&c.p<=price);
+ $('#app').innerHTML=`<h1>${t('h1')}</h1><p class="sub">${t('sub')}</p>
+ <h2>${t('wl')}</h2>
+ <div class="chips">${CATS.map(k=>`<button class="chip ${cat===k?'on':''}" onclick="cat='${k}';vC()">${t(k)}</button>`).join('')}</div>
+ <div class="filters">
+  <label>${t('tl')}<select onchange="tl=this.value;vC()"><option value="all">${t('all')}</option>${['ru','kk','en'].map(k=>`<option value="${k}" ${tl===k?'selected':''}>${LN[k]}</option>`).join('')}</select></label>
+  <label>${t('mp')}: <b style="color:var(--ink)">${money(price)}</b><input type="range" min="2000" max="10000" step="500" value="${price}" oninput="price=+this.value;vC(true)" aria-label="${t('mp')}"></label>
+ </div>
+ <div class="grid">${list.length?list.map(cc).join(''):`<div class="empty">${t('none')}</div>`}</div>`;
+ if(arguments[0]){const r=$('input[type=range]');r&&r.focus()}
+}
+function cc(c){const x=tch(c.t);return `<button class="card" onclick="openC(${c.id})">
+ <div class="tags"><span class="tag">${t(c.c)}</span></div>
+ <h3>${esc(c.n[IDX[lang]])}</h3>
+ <div class="row">${av(x)}<div><b>${esc(x.n)}</b><div class="mute">${stars(rt(x))} ${rt(x).toFixed(1)} · ${cnt(x)} ${t('rev')}</div></div></div>
+ ${tags(c.l)}
+ <div class="row sp"><span class="price">${money(c.p)}</span><span class="mute">60 ${t('min')}</span></div></button>`}
+
+function vT(){$('#app').innerHTML=`<h1 style="font-size:34px;margin-top:40px">${t('nt')}</h1><div class="grid" style="margin-top:24px">${T.map(x=>`<button class="card" onclick="openT(${x.id})"><div class="row">${av(x)}<div><b>${esc(x.n)}</b><div class="mute">${stars(rt(x))} ${rt(x).toFixed(1)} · ${cnt(x)} ${t('rev')}</div></div></div><p class="mute" style="margin:0">${esc(x.b[IDX[lang]])}</p><div class="tags">${x.s.map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div></button>`).join('')}</div>`}
+
+function vH(){const i=IDX[lang];$('#app').innerHTML=`<h1 style="font-size:34px;margin-top:40px">${t('nh')}</h1><div class="steps" style="margin-top:24px">${[0,1,2,3].map(k=>`<div class="card"><h3>${L[lang].hd[k]}</h3><span class="mute">${L[lang].hp[k]}</span></div>`).join('')}</div><div class="safe">🔒 ${t('sf')} ${t('fee')}.</div>`}
+
+function vM(){$('#app').innerHTML=`<h1 style="font-size:34px;margin-top:40px">${t('nm')}</h1><div class="grid" style="margin-top:24px">${O.length?O.slice().reverse().map(o=>{const c=crs(o.c),x=tch(c.t);
+ const s=o.s==='e'?t('s1'):o.s==='r'?t('s2'):t('s3');
+ let act='';
+ if(o.s==='e')act=`<div><b>${t('conf')}</b></div><div class="row"><button class="btn" onclick="conf(${o.id},1)">${t('yes')}</button><button class="btn bad" onclick="conf(${o.id},0)">${t('no')}</button></div>`;
+ else if(o.s==='r')act=o.k?`<div class="ok">★ ${o.k}/5</div>`:`<b>${t('rate')}</b><div class="rs">${[1,2,3,4,5].map(n=>`<button aria-label="${n}" onclick="rate(${o.id},${n})">★</button>`).join('')}</div>`;
+ else act=`<div class="mute">${t('rf')}</div>`;
+ if(o.pay)act=`<div class="mute" style="word-break:break-all">${t('wpay')}: ${o.pay.tk!=null?'🪙 '+o.pay.tk:'◎ '+(o.pay.lam/1e9).toFixed(4)+' SOL'} ${o.pay.live?`· <a href="https://explorer.solana.com/tx/${o.pay.tx}?cluster=devnet" target="_blank" rel="noopener">${t('wex')}</a>`:'('+t('wdm')+')'}</div>`+act;
+ return `<div class="card"><h3>${esc(c.n[IDX[lang]])}</h3><div class="mute">${esc(x.n)} · ${money(o.p)}${o.m==='sol'?' · ◎ '+o.sol+' SOL':o.m==='tok'?' · 🪙 '+o.tk:''}</div><span class="tag" style="align-self:flex-start">${s}</span>${act}</div>`}).join(''):`<div class="empty">${t('mine0')}</div>`}</div>`}
+
+/* ===== КҮН / ТҮН РЕЖИМІ ===== */
+#themeToggle{border:1px solid var(--line);background:var(--card);color:var(--ink);width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:20px;cursor:pointer;transition:transform .25s,background .25s,border-color .25s;flex:none}
+#themeToggle:hover{transform:rotate(12deg) scale(1.05);border-color:var(--acc)}
+#nightSky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .6s ease;background:radial-gradient(circle at 78% 18%,rgba(130,150,255,.10),transparent 25%),linear-gradient(180deg,#080d20 0%,#10172e 55%,#0b1020 100%)}
+:root[data-theme="dark"] #nightSky{opacity:1}
+.moon{position:absolute;width:92px;height:92px;right:8%;top:90px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 18%,#e9edff 55%,#bfc9ef 100%);box-shadow:0 0 25px rgba(220,230,255,.55),0 0 70px rgba(140,160,255,.25);animation:moonFloat 7s ease-in-out infinite}
+.moon:after{content:"";position:absolute;width:92px;height:92px;border-radius:50%;left:-24px;top:-8px;background:#0b1020}
+.stars{position:absolute;inset:0}.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 7px rgba(255,255,255,.9);animation:twinkle var(--d) ease-in-out infinite}
+.shooting-star{position:absolute;width:110px;height:2px;background:linear-gradient(90deg,transparent,#fff,transparent);opacity:0;transform:rotate(-25deg);filter:drop-shadow(0 0 5px #fff)}
+.shooting-star.s1{top:18%;left:72%;animation:shoot 6s linear infinite 1s}.shooting-star.s2{top:34%;left:84%;animation:shoot 8s linear infinite 4s}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.25)}}
+@keyframes moonFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes shoot{0%{opacity:0;transform:translate(0,0) rotate(-25deg)}8%{opacity:1}28%{opacity:0;transform:translate(-180px,80px) rotate(-25deg)}100%{opacity:0}}
+:root[data-theme="dark"] header{background:rgba(8,13,32,.72)}
+:root[data-theme="dark"] .card,:root[data-theme="dark"] .safe{box-shadow:0 8px 30px rgba(0,0,0,.16)}
+@media(prefers-reduced-motion:reduce){.moon,.star,.shooting-star{animation:none!important}}
+@media(max-width:760px){.moon{width:65px;height:65px;right:7%;top:150px}.moon:after{width:65px;height:65px}}
+</style>
+</head>
+<body>
+<header><div class="w bar">
+<div class="logo">Ustaz<i></i></div>
+<nav id="nav"></nav>
+<div class="lg" id="lg"></div><button id="themeToggle" type="button" onclick="toggleTheme()" aria-label="Күн / түн режимі">🌙</button>
+</div></header>
+<main class="w" id="app"></main>
+<footer><div class="w"><div id="dev"></div><div style="margin-top:6px"><b>Сыдық Нұрғиса</b> · <b>Калыбай Ержан</b> · <b>Уалихан Қожа</b></div></div></footer>
+<div id="m" role="dialog" aria-modal="true"><div class="md" id="md"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.98.0/lib/index.iife.min.js"></script>
+<script>
+/* ===== КҮН / ТҮН РЕЖИМІ ===== */
+(function(){
+ const saved=localStorage.getItem('themeMode'), sys=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+ document.documentElement.dataset.theme=saved||(sys?'dark':'light');
+ window.toggleTheme=function(){const dark=document.documentElement.dataset.theme==='dark';document.documentElement.dataset.theme=dark?'light':'dark';localStorage.setItem('themeMode',dark?'light':'dark');updateThemeButton()};
+ window.updateThemeButton=function(){const b=document.getElementById('themeToggle');if(!b)return;const dark=document.documentElement.dataset.theme==='dark';b.textContent=dark?'☀️':'🌙';b.title=dark?'Күндізгі режим':'Түнгі режим';b.setAttribute('aria-label',b.title)};
+ document.addEventListener('DOMContentLoaded',function(){const box=document.getElementById('stars');if(box){for(let i=0;i<75;i++){const s=document.createElement('span');s.className='star';s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*100)+'%';s.style.setProperty('--d',(2+Math.random()*4)+'s');s.style.animationDelay=(-Math.random()*5)+'s';box.appendChild(s)}}updateThemeButton()});
+})();
+const L={
+ru:{nw:'не найден. Установите кошелёк:',nph:'Phantom не найден. Установите расширение:',wdis:'Отключить',tokw:'токенов',trate:'1 токен = 100 ₸',tknone:'Токен не настроен: укажите адрес токена во вкладке Devnet.',tka:'Адрес токена (mint) в Devnet',tks:'Сохранить токен',tkbad:'Токен не найден в Devnet. Проверьте адрес.',lowt:'Недостаточно токенов на кошельке.',dp:'Дать платформе 1 SOL (комиссии выплат)',c6:'Токен настроен',c7:'Баланс вашего токена',nd:'Devnet',dt:'Проверка Devnet',dd:'Здесь видно, работает ли реальная оплата: библиотека Solana, Phantom, связь с Devnet и балансы.',c1:'Библиотека Solana загружена',c2:'Кошелёк Phantom или Solflare найден',c3:'Связь с Solana Devnet',c4:'Баланс кошелька платформы',c5:'Ваш кошелёк подключён',dlive:'Реальный режим Devnet: оплата настоящая (тестовые SOL)',ddemo:'Демо-режим: какой-то пункт не выполнен. Внутри страницы Claude сеть Solana закрыта, откройте сайт на Netlify.',dr:'Проверить',da:'Получить 1 тестовый SOL',dx:'Тест: отправить 0.001 SOL',dok:'Перевод выполнен',daf:'Не удалось получить SOL. Лимит faucet: попробуйте позже на faucet.solana.com.',wpf:'Выплата не выполнена. Попробуйте ещё раз.',wpay:'Выплата учителю',wdm:'демо',wbad:'Неверный адрес кошелька',wlt:'Кошелёк Solana Devnet (для выплат)',wlow:'Недостаточно тестовых SOL. Возьмите их на faucet.solana.com.',wnet:'Перевод не выполнен. Проверьте, что Phantom работает в сети Solana Devnet.',wnote2:'Devnet: тестовые SOL, настоящих денег нет.',wbal:'Баланс Devnet',wfc:'Получить тестовые SOL',wex:'Открыть в Explorer',wesc:'Кошелёк платформы (эскроу)',cardm:'Банковская карта',wc:'Подключить кошелёк',wn:'Кошелёк не подключён',wdemo:'демо-кошелёк',wrej:'Подключение или подпись отклонены',wneed:'Сначала подключите кошелёк',wrate:'Демо-курс: 1 SOL = 80 000 ₸',wnote:'Тестовая транзакция: реальные деньги не списываются.',tx:'Транзакция',pub:'Опубликовать курс',pubd:'Курс опубликован',see:'Смотреть в каталоге',del:'Удалить',cd:'Описание курса',ey:'Опыт, лет',ed:'Образование',svr:'Сохранить резюме',pv:'Посмотреть резюме',cl:'Закрыть',lr:'Вход / Регистрация',li:'Войти',rg:'Регистрация',lo:'Выйти',ct:'Email или номер телефона',nk:'Никнейм',rl:'Кто вы?',st:'Ученик',tc:'Учитель',myp:'Мой профиль',hi:'Привет',ce:'Введите корректный email или номер телефона',ne:'Никнейм: минимум 3 символа',dm:'Демо: подойдёт любой email или номер. В настоящей версии добавим пароль и код из SMS.',ab:'О себе',skl:'Навыки (через запятую)',sv:'Сохранить',ac:'Добавить курс',ctt:'Название курса',cp:'Цена, ₸ (500–10000)',cg:'Категория',sd:'Сохранено',nl:'Сначала войдите или зарегистрируйтесь',mc:'Мои курсы',nc:'Курсы',nt:'Учителя',nh:'Как это работает',nm:'Мои уроки',h1:'Учитесь у живого учителя. Платите, когда урок помог.',sub:'Деньги хранятся на эскроу и уходят учителю только после вашего подтверждения.',wl:'Что хотите изучить?',all:'Все',python:'Python',backend:'Backend',cpp:'C++',vibe:'Вайб-кодинг',lang:'Языки',tl:'Язык обучения',mp:'Ваша цена до',none:'Ничего не найдено. Увеличьте цену или смените язык.',min:'мин',buy:'Купить урок',prof:'Профиль и резюме',vid:'Видео-визитка · 2 мин',plan:'Формат уроков',planv:'Видеозвонок, 60 мин: цель → практика → домашнее задание.',exp:'Опыт',yrs:'лет',edu:'Образование',sk:'Навыки',ver:'Личность проверена',rev:'отзывов',courses:'Курсы учителя',pay:'Оплата урока',fio:'ФИО',ph:'Телефон',card:'Номер карты (демо, не сохраняется)',pb:'Оплатить',sn:'Деньги заморожены на эскроу. Учитель получит их только после вашего подтверждения урока.',err:'Проверьте выделенные поля',mine0:'Пока нет уроков. Выберите курс.',s1:'На эскроу',s2:'Выплачено учителю',s3:'Возврат запрошен',conf:'Урок состоялся и был полезен?',yes:'Да',no:'Нет',rate:'Оцените урок',thx:'Спасибо! Рейтинг учителя обновлён.',fee:'Учителю 95%, платформа 5%',paid:'Оплачено. Деньги на эскроу.',rf:'Мы вернём деньги и разберём ситуацию.',dev:'Разработчики',hd:['Выберите курс','Оплата на эскроу','Проведите урок','Подтвердите и оцените'],hp:['Смотрите видео учителя и резюме.','Мы храним деньги, учитель их не видит.','Занятие по видеосвязи.','Учитель получает 95%. Отзыв открывается только после урока.'],sf:'Безопасность: деньги на эскроу, проверенные учителя, отзывы только после урока.'},
+kk:{nw:'табылмады. Әмиянды орнатыңыз:',nph:'Phantom табылмады. Кеңейтімді орнатыңыз:',wdis:'Ажырату',tokw:'токен',trate:'1 токен = 100 ₸',tknone:'Токен бапталмаған: токен мекенжайын Devnet бетінде көрсетіңіз.',tka:'Токен мекенжайы (mint), Devnet',tks:'Токенді сақтау',tkbad:'Devnet-те токен табылмады. Мекенжайды тексеріңіз.',lowt:'Әмиянда токен жеткіліксіз.',dp:'Платформаға 1 SOL беру (төлем комиссиясы)',c6:'Токен бапталған',c7:'Токен балансыңыз',nd:'Devnet',dt:'Devnet тексеру',dd:'Нақты төлем жұмыс істей ме: Solana кітапханасы, Phantom, Devnet байланысы және баланстар осында көрінеді.',c1:'Solana кітапханасы жүктелді',c2:'Phantom немесе Solflare әмияны табылды',c3:'Solana Devnet байланысы',c4:'Платформа әмияны балансы',c5:'Сіздің әмияныңыз қосылған',dlive:'Devnet нақты режимі: төлем шынайы (тест SOL)',ddemo:'Демо-режим: тізімдегі бір тармақ орындалмады. Claude беті ішінде Solana желісі жабық, сайтты Netlify-да ашыңыз.',dr:'Тексеру',da:'1 тест SOL алу',dx:'Тест: 0.001 SOL жіберу',dok:'Аударым орындалды',daf:'SOL алу мүмкін болмады. Faucet лимиті: faucet.solana.com-да кейінірек көріңіз.',wpf:'Төлем орындалмады. Қайталап көріңіз.',wpay:'Ұстазға төлем',wdm:'демо',wbad:'Әмиян мекенжайы қате',wlt:'Solana Devnet әмияны (төлемдер үшін)',wlow:'Тест SOL жеткіліксіз. Оларды faucet.solana.com сайтынан алыңыз.',wnet:'Аударым орындалмады. Phantom Solana Devnet желісінде екенін тексеріңіз.',wnote2:'Devnet: тест SOL, нақты ақша жоқ.',wbal:'Devnet баланс',wfc:'Тест SOL алу',wex:'Explorer-де ашу',wesc:'Платформа әмияны (эскроу)',cardm:'Банк картасы',wc:'Әмиянды қосу',wn:'Әмиян қосылмаған',wdemo:'демо-әмиян',wrej:'Қосылу немесе қол қою қабылданбады',wneed:'Алдымен әмиянды қосыңыз',wrate:'Демо-бағам: 1 SOL = 80 000 ₸',wnote:'Сынақ транзакциясы: нақты ақша есептен шығарылмайды.',tx:'Транзакция',pub:'Курсты жариялау',pubd:'Курс жарияланды',see:'Каталогта көру',del:'Жою',cd:'Курс сипаттамасы',ey:'Тәжірибе, жыл',ed:'Білімі',svr:'Түйіндемені сақтау',pv:'Түйіндемені көру',cl:'Жабу',lr:'Кіру / Тіркелу',li:'Кіру',rg:'Тіркелу',lo:'Шығу',ct:'Email немесе телефон нөмірі',nk:'Лақап ат',rl:'Сіз кімсіз?',st:'Оқушы',tc:'Оқытушы',myp:'Менің профилім',hi:'Сәлем',ce:'Дұрыс email немесе телефон нөмірін енгізіңіз',ne:'Лақап ат: кемінде 3 таңба',dm:'Демо: кез келген email немесе нөмір жарайды. Нақты нұсқада құпиясөз және SMS-код қосамыз.',ab:'Өзім туралы',skl:'Дағдылар (үтір арқылы)',sv:'Сақтау',ac:'Курс қосу',ctt:'Курс атауы',cp:'Бағасы, ₸ (500–10000)',cg:'Санат',sd:'Сақталды',nl:'Алдымен кіріңіз немесе тіркеліңіз',mc:'Менің курстарым',nc:'Курстар',nt:'Оқытушылар',nh:'Қалай жұмыс істейді',nm:'Менің сабақтарым',h1:'Нағыз ұстазбен оқыңыз. Сабақ көмектескенде ғана төлеңіз.',sub:'Ақша эскроуда сақталады және сіз растағаннан кейін ғана ұстазға жіберіледі.',wl:'Не үйренгіңіз келеді?',all:'Барлығы',python:'Python',backend:'Backend',cpp:'C++',vibe:'Вайб-кодинг',lang:'Тілдер',tl:'Оқыту тілі',mp:'Бағаңыз (дейін)',none:'Ештеңе табылмады. Бағаны арттырыңыз немесе тілді ауыстырыңыз.',min:'мин',buy:'Сабақты сатып алу',prof:'Профиль және түйіндеме',vid:'Бейне таныстыру · 2 мин',plan:'Сабақ форматы',planv:'Бейнеқоңырау, 60 мин: мақсат → практика → үй тапсырмасы.',exp:'Тәжірибе',yrs:'жыл',edu:'Білімі',sk:'Дағдылар',ver:'Жеке басы тексерілген',rev:'пікір',courses:'Ұстаз курстары',pay:'Сабаққа төлем',fio:'Аты-жөні',ph:'Телефон',card:'Карта нөмірі (демо, сақталмайды)',pb:'Төлеу',sn:'Ақша эскроуда қатырылады. Ұстаз оны сіз сабақты растағаннан кейін ғана алады.',err:'Белгіленген өрістерді тексеріңіз',mine0:'Әзірге сабақ жоқ. Курс таңдаңыз.',s1:'Эскроуда',s2:'Ұстазға төленді',s3:'Қайтару сұралды',conf:'Сабақ өтті ме және пайдалы болды ма?',yes:'Иә',no:'Жоқ',rate:'Сабақты бағалаңыз',thx:'Рахмет! Ұстаздың рейтингі жаңарды.',fee:'Ұстазға 95%, платформаға 5%',paid:'Төленді. Ақша эскроуда.',rf:'Ақшаны қайтарамыз және жағдайды қараймыз.',dev:'Әзірлеушілер',hd:['Курс таңдаңыз','Эскроуға төлеңіз','Сабақ өткізіңіз','Растап, бағалаңыз'],hp:['Ұстаздың бейнесі мен түйіндемесін қараңыз.','Ақшаны біз сақтаймыз, ұстаз көрмейді.','Бейнебайланыс арқылы сабақ.','Ұстаз 95% алады. Пікір тек сабақтан кейін ашылады.'],sf:'Қауіпсіздік: ақша эскроуда, тексерілген ұстаздар, пікір тек сабақтан кейін.'},
+en:{nw:'not found. Install the wallet:',nph:'Phantom not found. Install the extension:',wdis:'Disconnect',tokw:'tokens',trate:'1 token = 100 ₸',tknone:'Token not set: enter the token address on the Devnet tab.',tka:'Token address (mint) on Devnet',tks:'Save token',tkbad:'Token not found on Devnet. Check the address.',lowt:'Not enough tokens in your wallet.',dp:'Give platform 1 SOL (payout fees)',c6:'Token configured',c7:'Your token balance',nd:'Devnet',dt:'Devnet check',dd:'See whether real payments work: Solana library, Phantom, Devnet connection and balances.',c1:'Solana library loaded',c2:'Phantom or Solflare wallet found',c3:'Solana Devnet connection',c4:'Platform wallet balance',c5:'Your wallet connected',dlive:'Devnet live mode: payments are real (test SOL)',ddemo:'Demo mode: a check above failed. Inside the Claude page the Solana network is blocked, so open the site on Netlify.',dr:'Run check',da:'Get 1 test SOL',dx:'Test: send 0.001 SOL',dok:'Transfer done',daf:'Could not get SOL. Faucet limit: try again later at faucet.solana.com.',wpf:'Payout failed. Please try again.',wpay:'Teacher payout',wdm:'demo',wbad:'Invalid wallet address',wlt:'Solana Devnet wallet (for payouts)',wlow:'Not enough test SOL. Get some at faucet.solana.com.',wnet:'Transfer failed. Make sure Phantom is on Solana Devnet.',wnote2:'Devnet: test SOL, no real money.',wbal:'Devnet balance',wfc:'Get test SOL',wex:'Open in Explorer',wesc:'Platform wallet (escrow)',cardm:'Bank card',wc:'Connect wallet',wn:'Wallet not connected',wdemo:'demo wallet',wrej:'Connection or signature rejected',wneed:'Connect your wallet first',wrate:'Demo rate: 1 SOL = 80,000 ₸',wnote:'Test transaction: no real money is charged.',tx:'Transaction',pub:'Publish course',pubd:'Course published',see:'View in catalog',del:'Delete',cd:'Course description',ey:'Experience, years',ed:'Education',svr:'Save resume',pv:'Preview resume',cl:'Close',lr:'Log in / Sign up',li:'Log in',rg:'Sign up',lo:'Log out',ct:'Email or phone number',nk:'Nickname',rl:'Who are you?',st:'Student',tc:'Teacher',myp:'My profile',hi:'Hello',ce:'Enter a valid email or phone number',ne:'Nickname: at least 3 characters',dm:'Demo: any email or number works. The real version will add a password and SMS code.',ab:'About me',skl:'Skills (comma separated)',sv:'Save',ac:'Add course',ctt:'Course title',cp:'Price, ₸ (500–10000)',cg:'Category',sd:'Saved',nl:'Please log in or sign up first',mc:'My courses',nc:'Courses',nt:'Teachers',nh:'How it works',nm:'My lessons',h1:'Learn from a real teacher. Pay when the lesson helps.',sub:'Your money is held in escrow and released to the teacher only after you confirm.',wl:'What do you want to learn?',all:'All',python:'Python',backend:'Backend',cpp:'C++',vibe:'Vibe coding',lang:'Languages',tl:'Teaching language',mp:'Your price up to',none:'Nothing found. Raise the price or change the language.',min:'min',buy:'Buy lesson',prof:'Profile and resume',vid:'Video intro · 2 min',plan:'Lesson format',planv:'Video call, 60 min: goal → practice → homework.',exp:'Experience',yrs:'years',edu:'Education',sk:'Skills',ver:'Identity verified',rev:'reviews',courses:'Teacher courses',pay:'Lesson payment',fio:'Full name',ph:'Phone',card:'Card number (demo, not saved)',pb:'Pay',sn:'Your money is frozen in escrow. The teacher gets it only after you confirm the lesson.',err:'Check the highlighted fields',mine0:'No lessons yet. Pick a course.',s1:'Held in escrow',s2:'Paid to teacher',s3:'Refund requested',conf:'Did the lesson take place and was it useful?',yes:'Yes',no:'No',rate:'Rate the lesson',thx:'Thank you! Teacher rating updated.',fee:'Teacher gets 95%, platform 5%',paid:'Paid. Money is in escrow.',rf:'We will refund you and review the case.',dev:'Developers',hd:['Choose a course','Pay into escrow','Take the lesson','Confirm and rate'],hp:['Watch the teacher video and resume.','We hold the money; the teacher cannot touch it.','A live video session.','Teacher receives 95%. Reviews open only after the lesson.'],sf:'Safety: escrow payments, verified teachers, reviews only after the lesson.'}};
+const CATS=['all','python','backend','cpp','vibe','lang'];
+const T=[
+{id:1,w:'3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',n:'Айгерім Сәрсенова',r:4.9,n0:38,y:7,e:'КБТУ, Computer Science',s:['Python','Django','Алгоритмы'],l:['ru','kk'],b:['Пишу на Python 7 лет, работала в финтехе. Объясняю просто и на задачах.','Python-да 7 жыл жұмыс істедім, финтехте болдым. Қарапайым әрі тапсырмалар арқылы түсіндіремін.','7 years of Python, ex-fintech. I teach simply and through real tasks.']},
+{id:2,w:'3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',n:'Дмитрий Волков',r:4.8,n0:52,y:9,e:'НГУ, Прикладная математика',s:['Backend','PostgreSQL','Docker'],l:['ru','en'],b:['Строю серверные системы. Научу проектировать API и базы данных.','Сервер жүйелерін құрамын. API мен дерекқор жобалауды үйретемін.','I build server systems. I will teach you API and database design.']},
+{id:3,w:'3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',n:'Daniel Carter',r:4.7,n0:29,y:11,e:'TU Munich, Software Engineering',s:['C++','STL','Performance'],l:['en','ru'],b:['Игровой и embedded-разработчик. Разберём C++ от указателей до шаблонов.','Ойын және embedded әзірлеушісі. C++-ты көрсеткіштерден шаблондарға дейін талдаймыз.','Game and embedded developer. We go from pointers to templates.']},
+{id:4,w:'3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',n:'Ержан Төлеуов',r:4.9,n0:44,y:5,e:'Astana IT University',s:['Vibe coding','C++','Cursor'],l:['kk','ru'],b:['Показываю, как с ИИ собрать рабочий продукт за вечер. Также учу C++ на казахском.','Жасанды интеллектпен бір кешке өнім жинауды көрсетемін. C++-ты қазақша да үйретемін.','I show how to ship a working product in an evening with AI. Also C++ in Kazakh.']},
+{id:5,w:'3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',n:'Sarah Whitmore',r:5.0,n0:61,y:8,e:'University of Leeds, Linguistics',s:['English','IELTS','Vibe coding'],l:['en'],b:['Преподаватель английского и вайб-кодинга: практика, а не грамматика ради грамматики.','Ағылшын және вайб-кодинг оқытушысы: практика, тек грамматика емес.','English and vibe coding teacher: practice first, not grammar for its own sake.']},
+{id:6,w:'3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',n:'Әлия Нұрланқызы',r:4.9,n0:73,y:12,e:'ЕНУ, Филология',s:['Қазақ тілі','Русский язык','Speaking'],l:['kk','ru'],b:['Учу казахскому и русскому: от разговорной речи до подготовки к экзаменам.','Қазақ және орыс тілін үйретемін: сөйлеу тәжірибесінен емтиханға дейін.','I teach Kazakh and Russian, from conversation to exam prep.']},
+{id:7,w:'3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',n:'Марат Исаев',r:4.6,n0:21,y:6,e:'SDU, Information Systems',s:['Python','Node.js','Data'],l:['kk','en'],b:['Разработчик в стартапах. Python для данных и Node.js бэкенд на казахском и английском.','Стартаптарда әзірлеуші. Деректерге арналған Python және Node.js бэкенд.','Startup developer. Python for data and Node.js backend in Kazakh and English.']}];
+const C=[
+{id:1,c:'python',t:1,p:4500,l:['ru','kk'],n:['Python с нуля до первого проекта','Python: нөлден алғашқы жобаға дейін','Python from zero to your first project']},
+{id:2,c:'python',t:7,p:6000,l:['en'],n:['Python для анализа данных','Деректер талдауына арналған Python','Python for data analysis']},
+{id:3,c:'backend',t:2,p:7500,l:['ru','en'],n:['Backend: REST API и базы данных','Backend: REST API және дерекқор','Backend: REST APIs and databases']},
+{id:4,c:'backend',t:7,p:5500,l:['kk','en'],n:['Node.js бэкенд с нуля','Node.js бэкендті нөлден','Node.js backend from scratch']},
+{id:5,c:'cpp',t:3,p:8000,l:['en','ru'],n:['C++: указатели, память, шаблоны','C++: көрсеткіштер, жад, шаблондар','C++: pointers, memory, templates']},
+{id:6,c:'cpp',t:4,p:5000,l:['kk'],n:['C++ қазақ тілінде: бастапқы курс','C++ қазақ тілінде: бастапқы курс','C++ in Kazakh: starter course']},
+{id:7,c:'vibe',t:4,p:4000,l:['kk','ru'],n:['Вайб-кодинг: приложение за вечер','Вайб-кодинг: бір кешке қосымша','Vibe coding: an app in one evening']},
+{id:8,c:'vibe',t:5,p:6500,l:['en'],n:['Vibe coding with AI tools','Жасанды интеллектпен вайб-кодинг','Vibe coding with AI tools']},
+{id:9,c:'lang',t:5,p:3500,l:['en','ru'],n:['Разговорный английский','Ағылшын сөйлеу практикасы','Conversational English']},
+{id:10,c:'lang',t:6,p:3000,l:['kk','ru'],n:['Казахский и русский: разговорная практика','Қазақ және орыс тілі: сөйлеу практикасы','Kazakh and Russian conversation']}];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let lang=ld('lg','ru'),view='c',cat='all',tl=lang,price=10000,O=ld('o',[]),R=ld('r',{});
+const t=k=>L[lang][k]||k, IDX={ru:0,kk:1,en:2}, LN={ru:'Русский',kk:'Қазақша',en:'English'};
+const tch=id=>T.find(x=>x.id===id), crs=id=>C.find(x=>x.id===id);
+const rt=x=>{const a=R[x.id]||[0,0],n=x.n0+a[1];return n?(x.r*x.n0+a[0])/n:0};
+const cnt=x=>x.n0+(R[x.id]?R[x.id][1]:0);
+const stars=v=>'<span class="st">'+'★'.repeat(Math.round(v))+'☆'.repeat(5-Math.round(v))+'</span>';
+const ini=x=>x.n.split(' ').map(w=>w[0]).slice(0,2).join('');
+const av=(x,b)=>`<div class="av ${b?'big':''}" style="background:hsl(${x.id*47+200} 45% 45%)">${ini(x)}</div>`;
+const money=v=>v.toLocaleString('ru-RU')+' ₸';
+const tags=a=>'<div class="tags">'+a.map(x=>`<span class="tag">${esc(LN[x]||x)}</span>`).join('')+'</div>';
+
+function head(){
+ $('#nav').innerHTML=[['c','nc'],['t','nt'],['h','nh'],['m','nm'],['d','nd']].map(([v,k])=>`<button class="${view===v?'on':''}" onclick="go('${v}')">${t(k)}${v==='m'&&O.length?' ('+O.length+')':''}</button>`).join('')+(U?`<button class="${view==='p'?'on':''}" onclick="go('p')">👤 ${esc(U.nk)}</button>`:`<button class="${view==='a'?'on':''}" onclick="go('a')">${t('lr')}</button>`);
+ $('#lg').innerHTML=[['ru','РУС'],['kk','ҚАЗ'],['en','ENG']].map(([k,n])=>`<button class="${lang===k?'on':''}" onclick="setL('${k}')">${n}</button>`).join('');
+ $('#dev').textContent=t('dev');document.documentElement.lang=lang;updateThemeButton();
+}
+function go(v){view=v;render();scrollTo({top:0})}
+function setL(k){lang=k;tl=k;sv('lg',k);render();if($('#m').classList.contains('on'))closeM()}
+function render(){head();({c:vC,t:vT,h:vH,m:vM,a:vA,p:vP,d:vD})[view]()}
+
+function vC(){
+ const list=C.filter(c=>(cat==='all'||c.c===cat)&&(tl==='all'||c.l.includes(tl))&&c.p<=price);
+ $('#app').innerHTML=`<h1>${t('h1')}</h1><p class="sub">${t('sub')}</p>
+ <h2>${t('wl')}</h2>
+ <div class="chips">${CATS.map(k=>`<button class="chip ${cat===k?'on':''}" onclick="cat='${k}';vC()">${t(k)}</button>`).join('')}</div>
+ <div class="filters">
+  <label>${t('tl')}<select onchange="tl=this.value;vC()"><option value="all">${t('all')}</option>${['ru','kk','en'].map(k=>`<option value="${k}" ${tl===k?'selected':''}>${LN[k]}</option>`).join('')}</select></label>
+  <label>${t('mp')}: <b style="color:var(--ink)">${money(price)}</b><input type="range" min="2000" max="10000" step="500" value="${price}" oninput="price=+this.value;vC(true)" aria-label="${t('mp')}"></label>
+ </div>
+ <div class="grid">${list.length?list.map(cc).join(''):`<div class="empty">${t('none')}</div>`}</div>`;
+ if(arguments[0]){const r=$('input[type=range]');r&&r.focus()}
+}
+function cc(c){const x=tch(c.t);return `<button class="card" onclick="openC(${c.id})">
+ <div class="tags"><span class="tag">${t(c.c)}</span></div>
+ <h3>${esc(c.n[IDX[lang]])}</h3>
+ <div class="row">${av(x)}<div><b>${esc(x.n)}</b><div class="mute">${stars(rt(x))} ${rt(x).toFixed(1)} · ${cnt(x)} ${t('rev')}</div></div></div>
+ ${tags(c.l)}
+ <div class="row sp"><span class="price">${money(c.p)}</span><span class="mute">60 ${t('min')}</span></div></button>`}
+
+function vT(){$('#app').innerHTML=`<h1 style="font-size:34px;margin-top:40px">${t('nt')}</h1><div class="grid" style="margin-top:24px">${T.map(x=>`<button class="card" onclick="openT(${x.id})"><div class="row">${av(x)}<div><b>${esc(x.n)}</b><div class="mute">${stars(rt(x))} ${rt(x).toFixed(1)} · ${cnt(x)} ${t('rev')}</div></div></div><p class="mute" style="margin:0">${esc(x.b[IDX[lang]])}</p><div class="tags">${x.s.map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div></button>`).join('')}</div>`}
+
+function vH(){const i=IDX[lang];$('#app').innerHTML=`<h1 style="font-size:34px;margin-top:40px">${t('nh')}</h1><div class="steps" style="margin-top:24px">${[0,1,2,3].map(k=>`<div class="card"><h3>${L[lang].hd[k]}</h3><span class="mute">${L[lang].hp[k]}</span></div>`).join('')}</div><div class="safe">🔒 ${t('sf')} ${t('fee')}.</div>`}
+
+function vM(){$('#app').innerHTML=`<h1 style="font-size:34px;margin-top:40px">${t('nm')}</h1><div class="grid" style="margin-top:24px">${O.length?O.slice().reverse().map(o=>{const c=crs(o.c),x=tch(c.t);
+ const s=o.s==='e'?t('s1'):o.s==='r'?t('s2'):t('s3');
+ let act='';
+ if(o.s==='e')act=`<div><b>${t('conf')}</b></div><div class="row"><button class="btn" onclick="conf(${o.id},1)">${t('yes')}</button><button class="btn bad" onclick="conf(${o.id},0)">${t('no')}</button></div>`;
+ else if(o.s==='r')act=o.k?`<div class="ok">★ ${o.k}/5</div>`:`<b>${t('rate')}</b><div class="rs">${[1,2,3,4,5].map(n=>`<button aria-label="${n}" onclick="rate(${o.id},${n})">★</button>`).join('')}</div>`;
+ else act=`<div class="mute">${t('rf')}</div>`;
+ if(o.pay)act=`<div class="mute" style="word-break:break-all">${t('wpay')}: ${o.pay.tk!=null?'🪙 '+o.pay.tk:'◎ '+(o.pay.lam/1e9).toFixed(4)+' SOL'} ${o.pay.live?`· <a href="https://explorer.solana.com/tx/${o.pay.tx}?cluster=devnet" target="_blank" rel="noopener">${t('wex')}</a>`:'('+t('wdm')+')'}</div>`+act;
+ return `<div class="card"><h3>${esc(c.n[IDX[lang]])}</h3><div class="mute">${esc(x.n)} · ${money(o.p)}${o.m==='sol'?' · ◎ '+o.sol+' SOL':o.m==='tok'?' · 🪙 '+o.tk:''}</div><span class="tag" style="align-self:flex-start">${s}</span>${act}</div>`}).join(''):`<div class="empty">${t('mine0')}</div>`}</div>`}
+
+// DEVNET DEMO ONLY: never put a real private key in browser code. In production the payout runs on a server or smart contract.
+const PKEY='2wfkh34pSXQrKkVrq81x4uMgfdwM2fBYqVFmPb5t5sUJWRvLcsz4NUxqEmDHsUJg2moJUZ4DPfsstRSdBBAERni7';
+const b58d=s=>{let n=0n;for(const c of s)n=n*58n+BigInt(B58.indexOf(c));let h=n.toString(16);if(h.length%2)h='0'+h;const a=(h.match(/../g)||[]).map(x=>parseInt(x,16));let z=0;for(const c of s){if(c==='1')z++;else break}return Uint8Array.from([...Array(z).fill(0),...a])};
+async function payout(to,lam){const sw=window.solanaWeb3,conn=new sw.Connection(RPC,'confirmed'),kp=sw.Keypair.fromSecretKey(b58d(PKEY));
+ return sw.sendAndConfirmTransaction(conn,new sw.Transaction().add(sw.SystemProgram.transfer({fromPubkey:kp.publicKey,toPubkey:new sw.PublicKey(to),lamports:lam})),[kp])}
+// Live payouts work only if PKEY belongs to PLATFORM; otherwise they fall back to demo mode.
+const canPay=()=>{try{return solanaWeb3.Keypair.fromSecretKey(b58d(PKEY)).publicKey.toBase58()===PLATFORM}catch(e){return false}};
+const errM=e=>e&&e.code===4001?t('wrej'):e&&e.message==='low'?t('wlow'):e&&e.message==='lowt'?t('lowt'):(console.error(e),t('wnet')+' ['+((e&&(e.message||e.name))||e)+']');
+function vD(){
+ $('#app').innerHTML=`<div style="max-width:620px;margin:40px auto 64px;display:flex;flex-direction:column;gap:14px"><h1 style="font-size:32px;margin:0">${t('dt')}</h1><p class="mute" style="margin:0">${t('dd')}</p>
+ <div class="card" id="dc"></div>
+ <div class="row" style="flex-wrap:wrap"><button class="btn" onclick="chk()">${t('dr')}</button><button class="btn g" onclick="conW('phantom').then(chk)">👻 Phantom</button><button class="btn g" onclick="conW('solflare').then(chk)">🔆 Solflare</button><button class="btn g" onclick="airdrop()">${t('da')}</button><button class="btn g" onclick="testTx()">${t('dx')}</button></div>
+ <div class="card"><div class="f" style="margin:0"><label for="tm">${t('tka')}</label><input id="tm" type="text" maxlength="44" value="${TOK?TOK.m:''}"></div><div class="row" style="flex-wrap:wrap"><button class="btn g" onclick="saveTok()">${t('tks')}</button><button class="btn g" onclick="createTok()">🪙 ${CTL[lang]||CTL.ru}</button><button class="btn g" onclick="airP()">${t('dp')}</button></div></div>
+ <div id="er" class="mute" style="color:#e5484d"></div><div id="wl" class="mute" style="word-break:break-all">${wtxt()}</div></div>`;chk()}
+const CTL={ru:'Создать токен',kk:'Токен жасау',en:'Create token'};
+async function createTok(){
+ const er=$('#er');er.textContent='';
+ if(!W||!P){er.textContent=t('wneed');return}
+ if(!window.solanaWeb3){er.textContent=t('wnet');return}
+ try{
+  const S=solanaWeb3,conn=new S.Connection(RPC,'confirmed'),me=PKb(W.a),mk=S.Keypair.generate(),d=6;
+  const lam=await conn.getMinimumBalanceForRentExemption(82);
+  const init=new Uint8Array(67);init[0]=0;init[1]=d;init.set(me.toBytes(),2);init[34]=1;init.set(me.toBytes(),35);
+  const mt=new Uint8Array(9);mt[0]=7;new DataView(mt.buffer).setBigUint64(1,100000n*10n**BigInt(d),true);
+  const m=mk.publicKey.toBase58(),a=ata(W.a,m);
+  const {blockhash,lastValidBlockHeight}=await conn.getLatestBlockhash();
+  const tx=new S.Transaction({feePayer:me,blockhash,lastValidBlockHeight}).add(
+   S.SystemProgram.createAccount({fromPubkey:me,newAccountPubkey:mk.publicKey,lamports:lam,space:82,programId:PKb(TP)}),
+   new S.TransactionInstruction({programId:PKb(TP),keys:[{pubkey:mk.publicKey,isSigner:false,isWritable:true},{pubkey:S.SYSVAR_RENT_PUBKEY,isSigner:false,isWritable:false}],data:init}),
+   mkAta(W.a,W.a,m),
+   new S.TransactionInstruction({programId:PKb(TP),keys:[{pubkey:mk.publicKey,isSigner:false,isWritable:true},{pubkey:a,isSigner:false,isWritable:true},{pubkey:me,isSigner:true,isWritable:false}],data:mt}));
+  tx.partialSign(mk);
+  const signed=await P.signTransaction(tx),sig=await conn.sendRawTransaction(signed.serialize());
+  await conn.confirmTransaction({signature:sig,blockhash,lastValidBlockHeight},'confirmed');
+  TOK={m,d};sv('tok',TOK);const i=$('#tm');if(i)i.value=m;chk();
+ }catch(e){console.error(e);er.textContent=errM(e)}
+}
+async function saveTok(){
+ const m=$('#tm').value.trim(),er=$('#er');er.textContent='';
+ if(!window.solanaWeb3){er.textContent=t('wnet');return}
+ try{const r=await new solanaWeb3.Connection(RPC,'confirmed').getParsedAccountInfo(PKb(m)),q=r.value&&r.value.data.parsed;if(!q||q.type!=='mint')throw 0;TOK={m,d:q.info.decimals};sv('tok',TOK);chk()}catch(e){er.textContent=t('tkbad')}
+}
+async function airP(){
+ $('#er').textContent='';
+ try{const c=new solanaWeb3.Connection(RPC,'confirmed'),sig=await c.requestAirdrop(PKb(PLATFORM),1e9);await c.confirmTransaction(sig,'confirmed');chk()}catch(e){$('#er').textContent=t('daf')}
+}
+async function chk(){
+ const sw=window.solanaWeb3,ph=getP('phantom')||getP('solflare'),rows=[];
+ const row=(ok,l,x)=>rows.push(`<div class="row sp"><span>${l}</span><span style="${ok?'color:var(--ok);font-weight:700':'color:#e5484d'}">${ok?'✓':'✕'} ${x||''}</span></div>`);
+ let net=0,slot='',pb='',wb='',tb='',tw='';
+ if(sw){try{const c=new sw.Connection(RPC,'confirmed');slot=await c.getSlot();net=1;pb=(await c.getBalance(new sw.PublicKey(PLATFORM))/1e9).toFixed(3);tw=(await c.getBalance(new sw.PublicKey(TW))/1e9).toFixed(3);if(W&&W.real)wb=(await c.getBalance(new sw.PublicKey(W.a))/1e9).toFixed(3);if(TOK&&W){try{tb=(await c.getTokenAccountBalance(ata(W.a,TOK.m))).value.uiAmountString}catch(e){tb='0'}}}catch(e){}}
+ row(!!sw,t('c1'));row(!!ph,t('c2'));row(net,t('c3'),net?'slot '+slot:'');row(net,t('c4'),net?pb+' SOL':'');row(net,TWL[lang]||TWL.ru,net?tw+' SOL':'');row(!!(W&&W.real),t('c5'),wb?wb+' SOL':'');row(!!TOK,t('c6'),TOK?TOK.m.slice(0,4)+'… (d='+TOK.d+')':'');row(tb!=='',t('c7'),tb);
+ const live=sw&&ph&&net,d=$('#dc');if(d)d.innerHTML=`<b style="${live?'color:var(--ok)':''}">${live?t('dlive'):t('ddemo')}</b>`+rows.join('');
+}
+async function airdrop(){
+ $('#er').textContent='';
+ if(!(W&&W.real&&window.solanaWeb3)){$('#er').textContent=t('wneed');return}
+ try{const c=new solanaWeb3.Connection(RPC,'confirmed'),sig=await c.requestAirdrop(new solanaWeb3.PublicKey(W.a),1e9);await c.confirmTransaction(sig,'confirmed');await chk()}catch(e){$('#er').textContent=t('daf')}
+}
+async function testTx(){
+ $('#er').textContent='';
+ if(!(W&&W.real&&window.solanaWeb3)){$('#er').textContent=t('wneed');return}
+ try{const sig=await sendSol(1000000);$('#wl').innerHTML=`<span class="ok">✓ ${t('dok')}</span> · <a href="https://explorer.solana.com/tx/${sig}?cluster=devnet" target="_blank" rel="noopener">${t('wex')}</a>`;chk()}catch(e){$('#er').textContent=errM(e)}
+}
+async function conf(id,y){
+ const o=O.find(z=>z.id===id);
+ if(!y){o.s='d';sv('o',O);render();return}
+ document.querySelectorAll('#app button').forEach(b=>b.disabled=true);
+ const x=tch(crs(o.c).t),lam=Math.floor(Math.round(o.p/80000*1e9)*0.95);
+ try{
+  const live=!!(DEMO_TEACHER_WALLET&&window.solanaWeb3&&o.live&&canPay()),tk=Math.floor(o.tk*0.95);
+  if(o.m==='sol')o.pay=live?{tx:await payout(DEMO_TEACHER_WALLET,lam),lam,live:1}:{tx:rb(88),lam,live:0};
+  if(o.m==='tok')o.pay=live?{tx:await payoutTok(DEMO_TEACHER_WALLET,tk),tk,live:1}:{tx:rb(88),tk,live:0};
+ }catch(e){alert(t('wpf'));render();return}
+ o.s='r';sv('o',O);render();
+}
+function rate(id,n){const o=O.find(z=>z.id===id);if(o.k)return;o.k=n;const tid=crs(o.c).t,a=R[tid]||[0,0];R[tid]=[a[0]+n,a[1]+1];sv('o',O);sv('r',R);render();alert(t('thx'))}
+
+function showM(h){$('#md').innerHTML='<button class="x" onclick="closeM()" aria-label="Close">×</button>'+h;$('#m').classList.add('on')}
+function closeM(){$('#m').classList.remove('on')}
+$('#m').addEventListener('click',e=>{if(e.target.id==='m')closeM()});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+const vid=()=>`<div class="vid" role="img" aria-label="${t('vid')}"><b>▶</b><span>${t('vid')}</span></div>`;
+
+function openC(id){const c=crs(id),x=tch(c.t);showM(`<div class="tags"><span class="tag">${t(c.c)}</span></div><h2 style="margin:10px 0 4px">${esc(c.n[IDX[lang]])}</h2>
+ <button class="row" style="border:0;background:none;padding:8px 0;text-align:left" onclick="openT(${x.id})">${av(x)}<div><b>${esc(x.n)}</b><div class="mute">${stars(rt(x))} ${rt(x).toFixed(1)} · ${t('prof')}</div></div></button>
+ ${vid()}${c.d?`<p>${esc(c.d)}</p>`:''}<p class="mute" style="margin:0 0 6px"><b style="color:var(--ink)">${t('plan')}:</b> ${t('planv')}</p>${tags(c.l)}
+ <div class="row sp" style="margin-top:20px"><span class="price">${money(c.p)}</span><button class="btn" onclick="openP(${id})">${t('buy')}</button></div>`)}
+
+function openT(id){const x=tch(id);showM(`<div class="row">${av(x,1)}<div><h2 style="margin:0">${esc(x.n)}</h2><div class="ok">✓ ${t('ver')}</div><div class="mute">${stars(rt(x))} ${rt(x).toFixed(1)} · ${cnt(x)} ${t('rev')}</div></div></div>
+ <p>${esc(x.b[IDX[lang]])}</p>${vid()}
+ <p class="mute" style="margin:0"><b style="color:var(--ink)">${t('exp')}:</b> ${x.y} ${t('yrs')}<br><b style="color:var(--ink)">${t('edu')}:</b> ${esc(x.e)}</p>
+ <p style="margin:12px 0 6px"><b>${t('sk')}</b></p><div class="tags">${x.s.map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div>${tags(x.l)}
+ <p style="margin:18px 0 8px"><b>${t('courses')}</b></p>${C.filter(c=>c.t===id).map(c=>`<button class="card" style="width:100%;margin-bottom:8px;padding:14px" onclick="openC(${c.id})"><b>${esc(c.n[IDX[lang]])}</b><span class="mute">${money(c.p)} · 60 ${t('min')}</span></button>`).join('')}`)}
+
+function openP(id){if(!U){closeM();go('a');return}pm='card';const c=crs(id);showM(`<h2>${t('pay')}</h2><p class="mute" style="margin-top:0">${esc(c.n[IDX[lang]])} — <b style="color:var(--ink)">${money(c.p)}</b></p>
+ <div class="row" style="margin-bottom:14px"><button class="chip pmb on" data-m="card" onclick="setPM('card')">${t('cardm')}</button><button class="chip pmb" data-m="sol" onclick="setPM('sol')">◎ Solana</button><button class="chip pmb" data-m="tok" onclick="setPM('tok')">🪙 Token</button></div>
+ <div class="f" id="f1"><label for="i1">${t('fio')}</label><input id="i1" type="text" autocomplete="name" placeholder="Иванов Иван Иванович"></div>
+ <div class="f" id="f2"><label for="i2">${t('ph')}</label><input id="i2" type="tel" autocomplete="tel" placeholder="+7 701 123 45 67"></div>
+ <div class="f" id="f3"><label for="i3">Gmail</label><input id="i3" type="email" autocomplete="email" placeholder="name@gmail.com"></div>
+ <div class="f" id="f4"><label for="i4">${t('card')}</label><input id="i4" type="text" inputmode="numeric" autocomplete="off" maxlength="19" placeholder="0000 0000 0000 0000" oninput="this.value=this.value.replace(/\\D/g,'').replace(/(.{4})/g,'$1 ').trim()"></div>
+ <div class="card" id="sol" style="display:none;margin-bottom:14px;gap:8px"><div id="wl" class="mute">${wtxt()}</div><div class="row" style="flex-wrap:wrap"><button class="btn g" onclick="conW('phantom')">👻 Phantom</button><button class="btn g" onclick="conW('solflare')">🔆 Solflare</button></div><div class="mute" id="tk" style="font-size:13px;display:none">🪙 ≈ <b style="color:var(--ink)">${Math.ceil(c.p/RATE)}</b> ${t('tokw')} · ${t('trate')}<br>${TOK?TOK.m.slice(0,6)+'…'+TOK.m.slice(-6):t('tknone')}</div><div class="mute" id="ls" style="font-size:13px">≈ <b style="color:var(--ink)">${solAmt(c.p)} SOL</b> · ${t('wrate')}<br>${t('wesc')}: ${PLATFORM.slice(0,6)}…${PLATFORM.slice(-6)} · <a href="https://faucet.solana.com" target="_blank" rel="noopener">${t('wfc')}</a></div></div>
+ <div class="mute" id="er" style="color:#e5484d;min-height:22px"></div>
+ <p class="mute" style="font-size:13px">🔒 ${t('sn')} ${t('fee')}.</p>
+ <button class="btn" style="width:100%" id="pb2" onclick="pay(${id})">${t('pb')} ${money(c.p)}</button>`)}
+
+let pm='card',W=null;
+let TOK=ld('tok',null);
+const TP='TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',AP='ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL',RATE=100;
+const TW='3Rac7dueBBndkqfxZxGxMMHWDPLi9hZ2KvsWETKhFaaN',TWL={ru:'Кошелёк преподавателя',kk:'Оқытушы әмияны',en:'Teacher wallet'},PLATFORM='8zdZfJ4DLyiaNmV55biNC3NoXpZKNjM4zta2r1wwK1WT',RPC='https://api.devnet.solana.com';
+// DEVNET DEMO: TW is the wallet that receives the teacher payout. It may be your own test wallet.
+const DEMO_TEACHER_WALLET=TW;
+const B58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+const rb=n=>Array.from(crypto.getRandomValues(new Uint8Array(n)),b=>B58[b%58]).join('');
+const solAmt=p=>(p/80000).toFixed(4);
+function setPM(m){pm=m;$('#f4').style.display=m==='card'?'':'none';$('#sol').style.display=m==='card'?'none':'';$('#ls').style.display=m==='sol'?'':'none';$('#tk').style.display=m==='tok'?'':'none';document.querySelectorAll('.pmb').forEach(b=>b.classList.toggle('on',b.dataset.m===m))}
+let P=null;
+const NM={phantom:'Phantom',solflare:'Solflare'},LK={phantom:'https://phantom.com/download',solflare:'https://solflare.com/download'};
+const getP=k=>k==='phantom'?(window.phantom&&window.phantom.solana&&window.phantom.solana.isPhantom?window.phantom.solana:window.solana&&window.solana.isPhantom?window.solana:null):(window.solflare&&window.solflare.isSolflare?window.solflare:null);
+const wtxt=b=>W?`<span class="ok">✓ ${NM[W.k]} ${W.a.slice(0,4)}…${W.a.slice(-4)}</span>${b!=null?' · '+t('wbal')+': '+b+' SOL':''} <button class="chip" style="padding:2px 10px" onclick="disW()">${t('wdis')}</button>`:t('wn');
+const showW=b=>{const w=$('#wl');if(w)w.innerHTML=wtxt(b)};
+async function conW(k){
+ const er=$('#er');if(er)er.textContent='';
+ const p=getP(k);
+ if(!p){if(er)er.innerHTML=NM[k]+' '+t('nw')+` <a href="${LK[k]}" target="_blank" rel="noopener">${LK[k].replace('https://','')}</a>`;return}
+ try{const r=await p.connect(),pk=(r&&r.publicKey)||p.publicKey;W={a:pk.toString(),real:1,k};P=p}catch(e){if(er)er.textContent=t('wrej');return}
+ showW();
+ if(window.solanaWeb3){try{showW(((await new solanaWeb3.Connection(RPC,'confirmed').getBalance(new solanaWeb3.PublicKey(W.a)))/1e9).toFixed(3))}catch(e){}}
+}
+async function disW(){try{await P.disconnect()}catch(e){}W=null;P=null;showW();if(view==='d')chk()}
+const PKb=a=>new solanaWeb3.PublicKey(a);
+const ata=(o,m)=>solanaWeb3.PublicKey.findProgramAddressSync([PKb(o).toBytes(),PKb(TP).toBytes(),PKb(m).toBytes()],PKb(AP))[0];
+const mkAta=(pay,own,m)=>new solanaWeb3.TransactionInstruction({programId:PKb(AP),keys:[[pay,1,1],[ata(own,m),0,1],[own,0,0],[m,0,0],[solanaWeb3.SystemProgram.programId.toBase58(),0,0],[TP,0,0]].map(([k,sg,w])=>({pubkey:PKb(k),isSigner:!!sg,isWritable:!!w})),data:new Uint8Array([1])});
+const mkTc=(src,m,dst,auth,u,d)=>{const b=new Uint8Array(10);b[0]=12;new DataView(b.buffer).setBigUint64(1,u,true);b[9]=d;return new solanaWeb3.TransactionInstruction({programId:PKb(TP),keys:[[src,0,1],[m,0,0],[dst,0,1],[auth,1,0]].map(([k,sg,w])=>({pubkey:PKb(k),isSigner:!!sg,isWritable:!!w})),data:b})};
+async function sendTok(n){
+ const S=solanaWeb3,conn=new S.Connection(RPC,'confirmed'),m=TOK.m,d=TOK.d,u=BigInt(n)*10n**BigInt(d),src=ata(W.a,m).toBase58();
+ let bal=0n;try{bal=BigInt((await conn.getTokenAccountBalance(PKb(src))).value.amount)}catch(e){}
+ if(bal<u)throw new Error('lowt');
+ const {blockhash,lastValidBlockHeight}=await conn.getLatestBlockhash();
+ const tx=new S.Transaction({feePayer:PKb(W.a),blockhash,lastValidBlockHeight}).add(mkAta(W.a,PLATFORM,m),mkTc(src,m,ata(PLATFORM,m).toBase58(),W.a,u,d));
+ const signed=await P.signTransaction(tx),sig=await conn.sendRawTransaction(signed.serialize());
+ await conn.confirmTransaction({signature:sig,blockhash,lastValidBlockHeight},'confirmed');
+ return sig;
+}
+async function payoutTok(to,n){
+ const S=solanaWeb3,conn=new S.Connection(RPC,'confirmed'),kp=S.Keypair.fromSecretKey(b58d(PKEY)),m=TOK.m,d=TOK.d;
+ return S.sendAndConfirmTransaction(conn,new S.Transaction().add(mkAta(PLATFORM,to,m),mkTc(ata(PLATFORM,m).toBase58(),m,ata(to,m).toBase58(),PLATFORM,BigInt(n)*10n**BigInt(d),d)),[kp]);
+}
+async function sendSol(lam){
+ const sw=window.solanaWeb3,conn=new sw.Connection(RPC,'confirmed'),from=new sw.PublicKey(W.a),to=new sw.PublicKey(PLATFORM);
+ if(await conn.getBalance(from)<lam+10000)throw new Error('low');
+ const {blockhash,lastValidBlockHeight}=await conn.getLatestBlockhash();
+ const tx=new sw.Transaction({feePayer:from,blockhash,lastValidBlockHeight}).add(sw.SystemProgram.transfer({fromPubkey:from,toPubkey:to,lamports:lam}));
+ const signed=await P.signTransaction(tx);
+ const sig=await conn.sendRawTransaction(signed.serialize());
+ await conn.confirmTransaction({signature:sig,blockhash,lastValidBlockHeight},'confirmed');
+ return sig;
+}
+async function pay(id){
+ const c=crs(id),v=k=>$('#i'+k).value.trim(),cr=pm!=='card',tk=pm==='tok',n=Math.ceil(c.p/RATE);
+ const ok=[v(1).split(/\s+/).filter(Boolean).length>=2&&v(1).length>=5,/^\+?[\d\s()-]{10,16}$/.test(v(2)),/^[\w.+-]+@gmail\.com$/i.test(v(3)),cr||v(4).replace(/\s/g,'').length===16];
+ ok.forEach((g,i)=>$('#f'+(i+1)).classList.toggle('bad',!g));
+ if(ok.includes(false)){$('#er').textContent=t('err');return}
+ let tx='';
+ if(cr){
+  if(!W){$('#er').textContent=t('wneed');return}
+  if(tk&&!TOK){$('#er').textContent=t('tknone');return}
+  if(!window.solanaWeb3){$('#er').textContent=t('wnet');return}
+  const b=$('#pb2');b.disabled=true;
+  try{tx=tk?await sendTok(n):await sendSol(Math.round(c.p/80000*1e9))}
+  catch(e){b.disabled=false;$('#er').textContent=errM(e);return}
+ }
+ O.push({id:Date.now(),c:id,p:c.p,s:'e',name:v(1),phone:v(2),mail:v(3),m:pm,sol:pm==='sol'?solAmt(c.p):'',tk:tk?n:0,mint:tk?TOK.m:'',tx,live:cr?1:0});sv('o',O);
+ showM(`<h2 class="ok">✓ ${t('paid')}</h2>${tx?`<p class="mute" style="word-break:break-all">${tk?'🪙 '+n+' '+t('tokw'):'◎ '+solAmt(c.p)+' SOL'}<br>${t('tx')}: ${tx.slice(0,12)}…${tx.slice(-8)}<br>${t('wnote2')}</p><p><a href="https://explorer.solana.com/tx/${tx}?cluster=devnet" target="_blank" rel="noopener">${t('wex')}</a></p>`:''}<p class="mute">${t('sn')}</p><button class="btn" onclick="closeM();go('m')">${t('nm')}</button>`);head();
+}
+T.push(...ld('xt',[]));C.push(...ld('xc',[]));
+let US=ld('u',[]),U=US.find(x=>x.id===ld('cu',0))||null,am='r';
+const saveX=()=>{sv('xt',T.filter(x=>x.id>1000));sv('xc',C.filter(x=>x.id>1000));sv('u',US)};
+function vA(){
+ $('#app').innerHTML=`<div style="max-width:440px;margin:48px auto 64px"><div class="chips"><button class="chip ${am==='r'?'on':''}" onclick="am='r';vA()">${t('rg')}</button><button class="chip ${am==='l'?'on':''}" onclick="am='l';vA()">${t('li')}</button></div>
+ <div class="card" style="gap:0">
+ <div class="f" id="a1"><label for="c1">${t('ct')}</label><input id="c1" type="text" autocomplete="username" placeholder="name@gmail.com / +7 701 000 00 00"></div>
+ ${am==='r'?`<div class="f" id="a2"><label for="c2">${t('nk')}</label><input id="c2" type="text" maxlength="20" autocomplete="nickname"></div>
+ <div class="f"><label>${t('rl')}</label><div class="row"><label class="chip"><input type="radio" name="rl" value="s" checked>${t('st')}</label><label class="chip"><input type="radio" name="rl" value="t">${t('tc')}</label></div></div>`:''}
+ <div class="mute" id="ae" style="color:#e5484d;min-height:22px"></div>
+ <button class="btn" onclick="auth()">${am==='r'?t('rg'):t('li')}</button>
+ <p class="mute" style="font-size:13px;margin-bottom:0">🔒 ${t('dm')}</p></div></div>`}
+function auth(){
+ const c=$('#c1').value.trim(),em=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c),ph=/^\+?[\d\s()-]{10,16}$/.test(c);
+ $('#a1').classList.toggle('bad',!em&&!ph);
+ if(!em&&!ph){$('#ae').textContent=t('ce');return}
+ const key=em?c.toLowerCase():c.replace(/[^\d+]/g,'');
+ let u=US.find(x=>x.k===key);
+ if(!u){
+  let nk=am==='r'?$('#c2').value.trim():(c.split('@')[0]||'user').slice(0,20),r='s';
+  if(am==='r'){$('#a2').classList.toggle('bad',nk.length<3);if(nk.length<3){$('#ae').textContent=t('ne');return}r=document.querySelector('input[name=rl]:checked').value}
+  u={id:Date.now(),k:key,c,nk,r,ab:'',sk:''};US.push(u);
+  if(r==='t')T.push({id:u.id,n:nk,r:0,n0:0,y:0,e:'—',s:[],l:[lang],b:['','','']});
+  saveX();
+ }
+ U=u;sv('cu',u.id);go('p');
+}
+function logout(){U=null;sv('cu',0);go('c')}
+function vP(){
+ if(!U){go('a');return}
+ const tr=U.r==='t',x=tr&&tch(U.id),mine=tr?C.filter(c=>c.t===U.id):[];
+ $('#app').innerHTML=`<div style="max-width:620px;margin:40px auto 64px;display:flex;flex-direction:column;gap:18px">
+ <div class="row">${av({id:U.id%97,n:U.nk},1)}<div><h1 style="font-size:28px;margin:0">${t('hi')}, ${esc(U.nk)}!</h1><div class="mute">${esc(U.c)} <span class="tag">${tr?t('tc'):t('st')}</span></div></div></div>
+ <div class="row" style="flex-wrap:wrap"><button class="btn" onclick="go('${tr?'t':'c'}')">${t('nc')}</button><button class="btn g" onclick="go('m')">${t('nm')}</button><button class="btn bad" onclick="logout()">${t('lo')}</button></div>
+ ${tr?`<div class="card"><h3>${t('prof')}</h3>
+  <div class="f"><label for="pa">${t('ab')}</label><textarea id="pa" maxlength="400">${esc(U.ab)}</textarea></div>
+  <div class="f"><label for="pe">${t('ey')}</label><input id="pe" type="number" min="0" max="60" value="${x.y}"></div>
+  <div class="f"><label for="pd">${t('ed')}</label><input id="pd" type="text" maxlength="80" value="${esc(x.e==='—'?'':x.e)}"></div>
+  <div class="f"><label for="pw">${t('wlt')}</label><input id="pw" type="text" maxlength="44" value="${esc(x.w||'')}" placeholder="Phantom (Devnet) address"></div>
+  <div class="f"><label for="ps">${t('skl')}</label><input id="ps" type="text" maxlength="80" value="${esc(U.sk)}"></div>
+  <div class="row" style="flex-wrap:wrap"><button class="btn" onclick="saveP()">${t('svr')}</button><button class="btn g" onclick="saveP(1)">${t('pv')}</button><span class="ok" id="sm"></span></div></div>
+ <div class="card"><h3>${t('ac')}</h3>
+  <div class="f" id="g1"><label for="cn">${t('ctt')}</label><input id="cn" type="text" maxlength="60"></div>
+  <div class="f"><label for="cdd">${t('cd')}</label><textarea id="cdd" maxlength="300"></textarea></div>
+  <div class="f"><label for="cg">${t('cg')}</label><select id="cg">${CATS.slice(1).map(k=>`<option value="${k}">${t(k)}</option>`).join('')}</select></div>
+  <div class="f"><label for="cl">${t('tl')}</label><select id="cl">${['ru','kk','en'].map(k=>`<option value="${k}" ${k===lang?'selected':''}>${LN[k]}</option>`).join('')}</select></div>
+  <div class="f" id="g2"><label for="cpr">${t('cp')}</label><input id="cpr" type="number" min="500" max="10000" step="100" value="3000"></div>
+  <div class="mute" id="ce2" style="color:#e5484d"></div>
+  <button class="btn" onclick="addC()">${t('pub')}</button></div>
+ <h2 style="margin:0">${t('mc')}</h2>${mine.map(c=>`<div class="card"><b>${esc(c.n[IDX[lang]])}</b><span class="mute">${money(c.p)} · ${t(c.c)} · ${c.l.map(k=>LN[k]).join(', ')}</span><div class="row"><button class="btn g" onclick="openC(${c.id})">${t('nc')}</button><button class="btn bad" onclick="delC(${c.id})">${t('del')}</button></div></div>`).join('')}`:''}
+ </div>`}
+function saveP(pv){
+ const w=$('#pw').value.trim();
+ if(w&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(w)){$('#sm').textContent=t('wbad');return}
+ U.ab=$('#pa').value.trim();U.sk=$('#ps').value.trim();
+ const x=tch(U.id);x.w=w;x.b=[U.ab,U.ab,U.ab];x.s=U.sk.split(',').map(z=>z.trim()).filter(Boolean).slice(0,6);
+ x.y=Math.max(0,Math.min(60,+$('#pe').value||0));x.e=$('#pd').value.trim()||'—';
+ saveX();$('#sm').textContent='✓ '+t('sd');if(pv)openT(U.id);
+}
+function addC(){
+ const n=$('#cn').value.trim(),p=+$('#cpr').value,l=$('#cl').value,ok=p>=500&&p<=10000;
+ $('#g1').classList.toggle('bad',n.length<3);$('#g2').classList.toggle('bad',!ok);
+ if(n.length<3||!ok){$('#ce2').textContent=t('err');return}
+ const c={id:Date.now(),c:$('#cg').value,t:U.id,p:Math.round(p),l:[l],d:$('#cdd').value.trim(),n:[n,n,n]};
+ C.push(c);const x=tch(U.id);if(!x.l.includes(l))x.l.push(l);
+ saveX();vP();
+ showM(`<h2 class="ok">✓ ${t('pubd')}</h2><p><b>${esc(n)}</b><br><span class="mute">${money(c.p)} · ${t(c.c)} · ${LN[l]}</span></p><div class="row" style="flex-wrap:wrap"><button class="btn" onclick="cat='${c.c}';tl='all';price=10000;closeM();go('c')">${t('see')}</button><button class="btn g" onclick="closeM()">${t('cl')}</button></div>`);
+}
+function delC(id){const i=C.findIndex(c=>c.id===id);if(i>-1&&C[i].t===U.id&&id>1000){C.splice(i,1);saveX();vP()}}
+render();
+</script>
+</body>
+</html>
